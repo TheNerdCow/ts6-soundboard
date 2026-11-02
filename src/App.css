@@ -1,0 +1,240 @@
+:root {
+  --bg: #0b0d12;
+  --surface: #141820;
+  --surface-hover: #1c2230;
+  --border: #252b3b;
+  --text: #e8ecf4;
+  --text-muted: #8b95a8;
+  --accent: #22d3ee;
+  --accent-dim: #0e7490;
+  --danger: #f43f5e;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  user-select: none;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse at top, #12161f 0%, var(--bg) 70%);
+}
+
+/* ===== Top Bar ===== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(20, 24, 32, 0.85);
+  backdrop-filter: blur(12px);
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.2px;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.control-group label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-group select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 160px;
+  outline: none;
+  cursor: pointer;
+}
+
+.control-group select:hover {
+  border-color: var(--accent-dim);
+}
+
+.control-group.volume input[type="range"] {
+  width: 110px;
+  accent-color: var(--accent);
+}
+
+.btn-stop {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 8px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-stop:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* ===== Sound Grid ===== */
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  padding: 20px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.sound-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+  color: var(--text);
+  overflow: hidden;
+}
+
+.sound-card:hover {
+  background: var(--surface-hover);
+  border-color: #334155;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.sound-card.playing {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(34, 211, 238, 0.15);
+}
+
+.sound-card.add {
+  border-style: dashed;
+  opacity: 0.7;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.sound-card.add:hover {
+  opacity: 1;
+  border-color: var(--accent);
+}
+
+.add-icon {
+  font-size: 28px;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.sound-name {
+  font-size: 15px;
+  font-weight: 560;
+  letter-spacing: -0.2px;
+}
+
+.sound-meta {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.hotkey {
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--accent);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.hint {
+  opacity: 0.6;
+}
+
+/* Playing pulse */
+.pulse {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ===== Footer ===== */
+.footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  background: rgba(11, 13, 18, 0.6);
+}
+
+/* Scrollbar */
+.grid::-webkit-scrollbar {
+  width: 6px;
+}
+.grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+.grid::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
