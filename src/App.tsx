@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { invoke } from "@tauri-apps/api/core";
+// import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
 interface Sound {
@@ -11,7 +11,7 @@ interface Sound {
 }
 
 function App() {
-  const [sounds, setSounds] = useState<Sound[]>([
+  const [sounds] = useState<Sound[]>([
     { id: "1", name: "Airhorn", path: "", volume: 0.8 },
     { id: "2", name: "Bruh", path: "", volume: 0.9 },
     { id: "3", name: "Wow", path: "", volume: 0.85 },
@@ -20,31 +20,29 @@ function App() {
     { id: "6", name: "Sad Trombone", path: "", volume: 0.8 },
   ]);
 
-  const [outputDevices, setOutputDevices] = useState<string[]>(["Default"]);
+  const [outputDevices] = useState<string[]>(["Default"]);
   const [selectedDevice, setSelectedDevice] = useState("Default");
   const [globalVolume, setGlobalVolume] = useState(0.85);
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
 
-  // Placeholder – later will come from Rust
   useEffect(() => {
-    // invoke("list_output_devices").then(setOutputDevices).catch(console.error);
+    // Later: invoke("list_output_devices")
   }, []);
 
   const playSound = async (sound: Sound) => {
     setIsPlaying(sound.id);
     try {
-      // await invoke("play_sound", { path: sound.path, volume: sound.volume * globalVolume, device: selectedDevice });
+      // Later: await invoke("play_sound", { ... })
       console.log("Playing:", sound.name);
     } catch (e) {
       console.error(e);
     }
-    // Fake stop after 2s for demo
     setTimeout(() => setIsPlaying(null), 2000);
   };
 
   const stopAll = async () => {
     setIsPlaying(null);
-    // await invoke("stop_all");
+    // Later: await invoke("stop_all");
   };
 
   return (
@@ -99,7 +97,11 @@ function App() {
           >
             <div className="sound-name">{sound.name}</div>
             <div className="sound-meta">
-              {sound.hotkey ? <span className="hotkey">{sound.hotkey}</span> : <span className="hint">Click to play</span>}
+              {sound.hotkey ? (
+                <span className="hotkey">{sound.hotkey}</span>
+              ) : (
+                <span className="hint">Click to play</span>
+              )}
             </div>
             {isPlaying === sound.id && <div className="pulse" />}
           </button>
